@@ -1,0 +1,23 @@
+{
+  "name": "dnn-kinde-custom-pages",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Minimal Kinde Custom Pages repository for dnn.cc",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@kinde/infrastructure": "^0.11.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3",
+    "typescript": "^7.0.2"
+  }
+}
