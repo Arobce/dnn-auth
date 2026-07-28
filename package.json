@@ -2,11 +2,7 @@
   "name": "dnn-kinde-custom-pages",
   "version": "1.0.0",
   "private": true,
-  "description": "Minimal Kinde Custom Pages repository for dnn.cc",
-  "type": "module",
-  "engines": {
-    "node": ">=20"
-  },
+  "description": "Kinde Custom Pages for dnn.cc",
   "scripts": {
     "typecheck": "tsc --noEmit"
   },
