@@ -29,25 +29,25 @@ export default async function onUserPostAuthentication(
       JSON.stringify(event.request.authUrlParams)
     );
 
-    const orgCode = event.request.authUrlParams?.orgCode;
+    // const orgCode = event.request.authUrlParams?.orgCode;
 
-    console.log("orgCode:", orgCode);
+    // console.log("orgCode:", orgCode);
 
-    if (!orgCode) {
-      console.log("No orgCode found");
-      return;
-    }
+    // if (!orgCode) {
+    //   console.log("No orgCode found");
+    //   return;
+    // }
 
-    const kindeAPI = await createKindeAPI(event);
+    // const kindeAPI = await createKindeAPI(event);
 
-    const { data } = await kindeAPI.get({
-      endpoint: `organizations/${orgCode}/properties`,
-    });
+    // const { data } = await kindeAPI.get({
+    //   endpoint: `organizations/${orgCode}/properties`,
+    // });
 
-    console.log(
-      "Organization properties:",
-      JSON.stringify(data)
-    );
+    // console.log(
+    //   "Organization properties:",
+    //   JSON.stringify(data)
+    // );
   } catch (error) {
     console.log(
       "Error fetching organization properties:",
