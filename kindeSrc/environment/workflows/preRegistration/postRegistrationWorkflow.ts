@@ -6,8 +6,8 @@ import {
 } from "@kinde/infrastructure";
 
 export const workflowSettings: WorkflowSettings = {
-  id: "postAuthenticationOrgProperties",
-  name: "Read organization properties",
+  id: "postAuthenticationAddOrgUser",
+  name: "Add authenticated user to test organization",
   failurePolicy: {
     action: "continue",
   },
@@ -20,37 +20,38 @@ export const workflowSettings: WorkflowSettings = {
   },
 };
 
+const TEST_ORG_CODE = "org_f6f1ad202936f";
+
 export default async function onUserPostAuthentication(
   event: onPostAuthenticationEvent
 ) {
   try {
-    console.log(
-      "authUrlParams:",
-      JSON.stringify(event.request.authUrlParams)
-    );
+    const userId = event.context.user.id;
 
-    const orgCode = event.request.authUrlParams?.orgCode;
+    console.log("userId:", userId);
+    console.log("targetOrgCode:", TEST_ORG_CODE);
 
-    console.log("orgCode:", orgCode);
-
-    if (!orgCode) {
-      console.log("No orgCode found");
+    if (!userId) {
+      console.log("No user ID found");
       return;
     }
 
     const kindeAPI = await createKindeAPI(event);
 
-    const { data } = await kindeAPI.get({
-      endpoint: `organizations/${orgCode}/properties`,
+    const { data } = await kindeAPI.post({
+      endpoint: `organizations/${TEST_ORG_CODE}/users`,
+      params: {
+        users: [userId],
+      } as any,
     });
 
     console.log(
-      "Organization properties:",
+      "Add organization user response:",
       JSON.stringify(data)
     );
   } catch (error) {
     console.log(
-      "Error fetching organization properties:",
+      "Error adding user to organization:",
       JSON.stringify(error)
     );
   }
