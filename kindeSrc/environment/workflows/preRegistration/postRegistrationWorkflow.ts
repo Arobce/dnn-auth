@@ -1,5 +1,5 @@
 import {
-  onUserPostAuthenticationEvent,
+  onPostAuthenticationEvent,
   WorkflowSettings,
   WorkflowTrigger,
 } from "@kinde/infrastructure";
@@ -10,14 +10,14 @@ export const workflowSettings: WorkflowSettings = {
   failurePolicy: {
     action: "continue",
   },
-  trigger: WorkflowTrigger.UserPostAuthentication,
+  trigger: WorkflowTrigger.PostAuthentication,
   bindings: {
     console: {},
   },
 };
 
 export default async function onUserPostAuthentication(
-  event: onUserPostAuthenticationEvent
+  event: onPostAuthenticationEvent
 ) {
   console.log(
     "authUrlParams:",
