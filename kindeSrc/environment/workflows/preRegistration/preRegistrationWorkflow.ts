@@ -20,4 +20,5 @@ export default async function onUserPreRegistration(
   event: onUserPreRegistrationEvent
 ) {
   console.log("authUrlParams:", JSON.stringify(event.request.authUrlParams));
+  console.log("Event:", JSON.stringify(event));
 }
