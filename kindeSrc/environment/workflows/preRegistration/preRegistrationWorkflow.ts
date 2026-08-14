@@ -88,32 +88,37 @@ export default async function Workflow(
       "No disposable email domains configured, allowing registration"
     );
     console.log("=== preRegistration workflow END (no config) ===");
+    return;
+  }
 
-    const disposableEmailDomainsArray = disposableEmailDomains
-      .split(",")
-      .map((domain) => domain.trim());
+  const disposableEmailDomainsArray = disposableEmailDomains
+    .split(",")
+    .map((domain) => domain.trim().toLowerCase())
+    .filter(Boolean);
+  console.log(
+    "disposableEmailDomainsArray:",
+    JSON.stringify(disposableEmailDomainsArray)
+  );
+  console.log(
+    "disposableEmailDomainsArray length:",
+    disposableEmailDomainsArray.length
+  );
+
+  const userEmailDomain = ctx.user.email.split("@")[1]?.trim().toLowerCase();
+  console.log("userEmailDomain:", userEmailDomain);
+  console.log(
+    "is match:",
+    disposableEmailDomainsArray.includes(userEmailDomain)
+  );
+
+  if (disposableEmailDomainsArray.includes(userEmailDomain)) {
     console.log(
-      "disposableEmailDomainsArray:",
-      JSON.stringify(disposableEmailDomainsArray)
+      `Blocking registration for disposable email domain: ${userEmailDomain}`
     );
-    console.log("disposableEmailDomainsArray length:", disposableEmailDomainsArray.length);
-
-    const userEmailDomain = ctx.user.email.split("@")[1];
-    console.log("userEmailDomain:", userEmailDomain);
-    console.log(
-      "is match:",
-      disposableEmailDomainsArray.includes(userEmailDomain)
-    );
-
-    if (disposableEmailDomainsArray.includes(userEmailDomain)) {
-      console.log(
-        `Blocking registration for disposable email domain: ${userEmailDomain}`
-      );
-      denyAccess("Disposable email domain detected");
-      console.log("denyAccess called");
-    } else {
-      console.log(`Allowing registration for email domain: ${userEmailDomain}`);
-    }
+    denyAccess("Disposable email domain detected");
+    console.log("denyAccess called");
+  } else {
+    console.log(`Allowing registration for email domain: ${userEmailDomain}`);
   }
 
   console.log("=== preRegistration workflow END ===");
