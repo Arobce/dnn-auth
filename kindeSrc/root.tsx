@@ -8,6 +8,7 @@ import {
   type KindePageEvent,
 } from "@kinde/infrastructure";
 import React from "react";
+
 import { getStyles } from "./styles/styles";
 
 interface RootProps extends KindePageEvent {
@@ -20,25 +21,40 @@ export const Root = ({
   request,
 }: RootProps): React.JSX.Element => {
   const { content } = context.widget;
-  // `pageTitle` on @kinde/infrastructure >= 0.3, `page_title` on the older
-  // runtime Kinde falls back to. Read both so the tab title is never empty.
+
+  // Support both the newer `pageTitle` property and the older
+  // `page_title` property so the browser title does not render empty.
   const pageTitle =
-    content.pageTitle ?? (content as { page_title?: string }).page_title ?? "";
+    content.pageTitle ??
+    (content as { page_title?: string }).page_title ??
+    "";
 
   return (
-    <html dir={request.locale.isRtl ? "rtl" : "ltr"} lang={request.locale.lang}>
+    <html
+      dir={request.locale.isRtl ? "rtl" : "ltr"}
+      lang={request.locale.lang}
+    >
       <head>
         <meta charSet="utf-8" />
-        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <meta content="noindex" name="robots" />
-        <meta content={getKindeCSRF()} name="csrf-token" />
-        <meta content="light" name="color-scheme" />
-        <title>{pageTitle}</title>
-        <h1>Preview</h1>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0"
+        />
+        <meta name="robots" content="noindex" />
+        <meta name="csrf-token" content={getKindeCSRF()} />
+        <meta name="color-scheme" content="light" />
 
-        <link href={getSVGFaviconUrl()} rel="icon" type="image/svg+xml" />
+        <title data-page-title>{pageTitle}</title>
+
+        <link
+          href={getSVGFaviconUrl()}
+          rel="icon"
+          type="image/svg+xml"
+        />
+
         {getKindeRequiredCSS()}
         {getKindeRequiredJS()}
+
         <style>{getStyles()}</style>
       </head>
 
