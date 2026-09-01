@@ -44,7 +44,7 @@ export const Root = ({
         <meta name="csrf-token" content={getKindeCSRF()} />
         <meta name="color-scheme" content="light" />
 
-        <title data-page-title>{pageTitle}</title>
+        <title data-page-title>Roshan Hardcoded Test</title>
 
         <link
           href={getSVGFaviconUrl()}
